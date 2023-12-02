@@ -2,7 +2,7 @@ CREATE TABLE alumnos (
     ncontrol INT NOT NULL PRIMARY KEY,
     nombre VARCHAR(255),
     carrera VARCHAR(255),
-    estatus VARCHAR(1),
+    estatus VARCHAR(1)
 );
 
 CREATE TABLE maestros (
