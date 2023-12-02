@@ -3,6 +3,7 @@ import maestros from "./maestros.js";
 import alumnos from "./alumnos.js";
 import materias from "./materias.js";
 import grupos from "./grupos.js";
+import alumnosgrupos from "./alumnosgrupos.js";
 
 const app = express()
 const port = 3000
@@ -23,6 +24,10 @@ const routes = {
     grupos: {
         route: '/api/grupos',
         method: grupos
+    },
+    alumnosgrupos: {
+        route: '/api/alumnos-grupos',
+        method: alumnosgrupos
     }
 }
 
@@ -34,6 +39,7 @@ handleRoute(routes.maestros)
 handleRoute(routes.alumnos)
 handleRoute(routes.materias)
 handleRoute(routes.grupos)
+handleRoute(routes.alumnosgrupos)
 
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`)
