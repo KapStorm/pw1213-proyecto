@@ -28,8 +28,12 @@ route.get('/:id', (req, res) => {
 route.post('/', (req, res) => {
     const {ncontrol, nombre, carrera, estatus} = req.body;
 
+    if (!ncontrol || !nombre || !carrera || !estatus) {
+        return res.json({msg: 'Datos incompletos'});
+    }
+
     db.query('INSERT INTO alumnos (ncontrol, nombre, carrera, estatus) VALUES (?, ?, ?, ?)', [ncontrol, nombre, carrera, estatus], (err, rows) => {
-        if (err) throw err;
+        if (err) return res.json({error: 'Error al insertar alumno'});
 
         res.json({msg: 'Alumno insertado correctamente'});
     })
