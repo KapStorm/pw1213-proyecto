@@ -1,23 +1,9 @@
-<script>
-
-export default {
-  name: 'HomeView',
-  data() {
-    return {
-      count: 0,
-    }
-  },
-  methods: {
-    increment() {
-      this.count++;
-    }
-  },
-}
-</script>
-
 <template>
   <main>
-    <button @click="increment">Increment</button>
-    <h1>{{count}}</h1>
+    <h1>App Mini-SITEC para la materia de PW de 12:00 a 13:00</h1>
+    <h2>Desarrolladores:</h2>
+    <ul>
+      <li>Sebastian Arellanes Beltran</li>
+    </ul>
   </main>
 </template>
