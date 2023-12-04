@@ -9,8 +9,8 @@ export default {
       nombre: "",
       carrera: "Sistemas",
       estatus: "Vigente",
-      error: ""
-    }
+      error: "",
+    };
   },
   methods: {
     async submit() {
@@ -28,40 +28,32 @@ export default {
         this.nombre = "";
         this.carrera = "Sistemas";
         this.estatus = "Vigente";
-        window.location.reload()
+        window.location.reload();
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <template>
   <section>
     <form @submit.prevent="submit">
-      <section>
-        <label>N. Control <input v-model="ncontrol" required></label>
-      </section>
-      <section>
-        <label>Nombre <input v-model="nombre" required></label>
-      </section>
-      <section>
-        <label>Carrera
-          <select>
-            <option v-model="carrera">Sistemas</option>
-            <option>Industrial</option>
-            <option>Electronica</option>
-            <option>Gestion Empresarial</option>
-          </select>
-        </label>
-      </section>
-      <section>
-        <label>Estatus
-          <select v-model="estatus">
-            <option>Vigente</option>
-            <option>Baja</option>
-          </select>
-        </label>
-      </section>
+      <label for="ncontrol">N. Control</label>
+      <input v-model="ncontrol" name="ncontrol" required>
+      <label for="nombre">Nombre</label>
+      <input v-model="nombre" name="nombre" required>
+      <label for="carrera">Carrera</label>
+      <select name="carrera">
+        <option v-model="carrera">Sistemas</option>
+        <option>Industrial</option>
+        <option>Electronica</option>
+        <option>Gestion Empresarial</option>
+      </select>
+      <label for="estatus">Estatus</label>
+      <select v-model="estatus" name="estatus">
+        <option>Vigente</option>
+        <option>Baja</option>
+      </select>
       <button type="submit">Submit</button>
     </form>
     {{ error }}
@@ -69,5 +61,24 @@ export default {
 </template>
 
 <style scoped>
+form {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
 
+form > * {
+  margin: 4px 0;
+}
+
+label {
+  padding: 0 0.5rem;
+}
+
+input {
+  width: 196px;
+}
+
+select {
+  width: 128px;
+}
 </style>

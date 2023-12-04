@@ -6,9 +6,9 @@ export default {
   name: "AlumnosView",
   components: {
     AlumnoForm,
-    AlumnosList
-  }
-}
+    AlumnosList,
+  },
+};
 </script>
 
 <template>
@@ -18,6 +18,4 @@ export default {
   </main>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

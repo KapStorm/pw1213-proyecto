@@ -1,5 +1,4 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
   <div id="app">
@@ -11,7 +10,7 @@
       </nav>
     </header>
 
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
