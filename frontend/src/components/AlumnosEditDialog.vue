@@ -1,13 +1,13 @@
 <script setup>
 import { ref } from 'vue'
 import axios from 'axios'
-import router from '@/router'
 
+const emit = defineEmits(['on-submit-alumno-edit'])
 const props = defineProps({
   alumno: {
     type: Object,
     required: true
-  },
+  }
 })
 
 const carreras = ['Sistemas', 'Industrial', 'Gestion']
@@ -32,13 +32,13 @@ async function handleSubmit() {
         snackbar.value = true
         return
       }
-      router.go(0)
+      emit('on-submit-alumno-edit')
     })
 }
 </script>
 
 <template>
-  <v-card class='max-w-5xl mx-auto'>
+  <v-card class='w-5xl mx-auto'>
     <v-card-title>
       <span class='text-4xl text-center'>Editar alumno {{ alumno.nombre }}</span>
     </v-card-title>
@@ -55,7 +55,7 @@ async function handleSubmit() {
     </v-card-text>
   </v-card>
   <v-snackbar v-model='snackbar' color='red'>
-    {{error}}
+    {{ error }}
   </v-snackbar>
 </template>
 

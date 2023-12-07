@@ -2,6 +2,13 @@
 import { ref } from 'vue'
 import axios from 'axios'
 
+const props = defineProps({
+  onSubmit: {
+    type: Function,
+    required: true
+  }
+})
+
 const carreras = ['Sistemas', 'Industrial', 'Gestion']
 const estatuss = ['Activo', 'Baja']
 
@@ -12,19 +19,17 @@ const estatus = ref(estatuss[0])
 const error = ref('')
 
 async function handleSubmit() {
-  await axios.post('http://localhost:3000/api/alumnos', {
+  const res = await axios.post('http://localhost:3000/api/alumnos', {
     ncontrol: ncontrol.value,
     nombre: nombre.value,
     carrera: carrera.value,
     estatus: estatus.value.charAt(0)
   })
-    .then(res => {
-      if (res.data.error) {
-        error.value = res.data.error
-        return
-      }
-      window.location.reload()
-    })
+  if (res.data.error) {
+    error.value = res.data.error
+    return
+  }
+  await props.onSubmit()
 }
 </script>
 
