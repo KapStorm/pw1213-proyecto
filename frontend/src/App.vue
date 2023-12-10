@@ -9,6 +9,7 @@ import { RouterLink, RouterView } from 'vue-router'
       <nav class='[&>a]:m-5 [&>a]:p-2 [&>a]:rounded [&>a]:transition-all'>
         <RouterLink class='hover:bg-black hover:text-white' to='/'>Home</RouterLink>
         <RouterLink class='hover:bg-black hover:text-white' to='/alumnos'>Alumnos</RouterLink>
+        <RouterLink class='hover:bg-black hover:text-white' to='/maestros'>Maestros</RouterLink>
       </nav>
     </header>
 

@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import AlumnosEditDialog from '@/components/AlumnosEditDialog.vue'
-import AlumnosDeleteDialog from '@/components/AlumnosDeleteDialog.vue'
+import AlumnosEditDialog from '@/components/alumnos/AlumnosEditDialog.vue'
+import AlumnosDeleteDialog from '@/components/alumnos/AlumnosDeleteDialog.vue'
 
 const props = defineProps({
   alumnos: {
@@ -37,8 +37,6 @@ const headers = [
     value: 'action'
   }
 ]
-const carreras = ['Sistemas', 'Industrial', 'Gestion']
-const estatuss = ['Activo', 'Baja']
 const editDialog = ref(false)
 const deleteDialog = ref(false)
 const snackbarMessage = ref({
@@ -97,7 +95,7 @@ async function handleSubmitDeleteClose() {
                              @onSubmitAlumnoDeleteClose='handleSubmitDeleteClose' />
       </v-dialog>
     </template>
-    <template v-slot:item.action='{ item }'>
+    <template v-slot:[`item.action`]='{ item }'>
       <v-icon icon='mdi-pencil' @click='editAlumno(item)' />
       <v-icon icon='mdi-delete' @click='deleteAlumno(item)' />
     </template>

@@ -1,9 +1,9 @@
 <script setup>
 
-import AlumnosList from '@/components/AlumnosList.vue'
+import AlumnosList from '@/components/alumnos/AlumnosList.vue'
 import axios from 'axios'
 import { ref } from 'vue'
-import AlumnosForm from '@/components/AlumnosForm.vue'
+import AlumnosForm from '@/components/alumnos/AlumnosForm.vue'
 
 const alumnos = ref([])
 
