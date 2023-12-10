@@ -7,7 +7,7 @@ const props = defineProps({
     type: Array,
     required: true
   },
-  getGrupos: {
+  getGruposAlumnos: {
     type: Function,
     required: true
   }
@@ -21,31 +21,47 @@ const headers = [
   {
     title: 'Nombre',
     value: 'nombre'
+  },
+  {
+    title: 'Acciones',
+    value: 'action',
   }
 ]
 
 onMounted(async () => {
-  await props.getGrupos()
+  await props.getGruposAlumnos()
   await getAlumnos()
+  await getGrupos()
 })
 
 const alumnos = ref()
+const grupos = ref()
 const filteredAlumnos = ref()
 const error = ref()
-const selectedGrupoAlumno = ref()
+const selectedGrupo = ref()
 
-function gruposAlumnosProps(gruposAlumnos) {
+function gruposProps(gruposAlumnos) {
   return {
-    title: gruposAlumnos.clavegrupo,
+    title: gruposAlumnos.clavegrupo
   }
 }
 
-watch(selectedGrupoAlumno, async (newValue) => {
+watch(selectedGrupo, async (newValue) => {
   if (!newValue) return
 
+  const grupoAlumno = props.gruposAlumnos.filter((grupoAlumno) => {
+    return grupoAlumno.clavegrupo === newValue.clavegrupo
+  })
+
+  if (!grupoAlumno) {
+    filteredAlumnos.value = []
+    return
+  }
 
   filteredAlumnos.value = alumnos.value.filter((alumno) => {
-    return alumno.ncontrol === newValue.ncontrol
+    return grupoAlumno.some((grupoAlumno) => {
+      return grupoAlumno.ncontrol === alumno.ncontrol
+    })
   })
 })
 
@@ -58,16 +74,27 @@ async function getAlumnos() {
 
   alumnos.value = response.data
 }
+
+async function getGrupos() {
+  const response = await axios.get('http://localhost:3000/api/grupos')
+
+  if (response.data.error) {
+    error.value = response.data.error
+  }
+
+  grupos.value = response.data
+}
 </script>
 
 <template>
+  <h2 class='text-3xl text-center mt-2'>Lista de alumnos en el grupo</h2>
   {{ error }}
   <v-select
-    v-model='selectedGrupoAlumno'
-    :items='gruposAlumnos'
-    :item-props='gruposAlumnosProps'
-    label='Grupos Alumnos'
-    />
+    v-model='selectedGrupo'
+    :items='grupos'
+    :item-props='gruposProps'
+    label='Grupos'
+  />
   <v-data-table :headers='headers' :items='filteredAlumnos'>
     <template #[`item.action`]>
       <v-icon icon='mdi-delete' />

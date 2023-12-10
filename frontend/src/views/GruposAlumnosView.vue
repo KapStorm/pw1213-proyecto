@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import GruposAlumnosList from '@/components/gruposalumnos/GruposAlumnosList.vue'
+import GruposAlumnosForm from '@/components/gruposalumnos/GruposAlumnosForm.vue'
 
 const gruposAlumnos = ref([])
 
@@ -11,5 +12,6 @@ const getGruposAlumnos = async () => {
 </script>
 
 <template>
-  <GruposAlumnosList :gruposAlumnos='gruposAlumnos' :getGrupos='getGruposAlumnos' />
+  <GruposAlumnosForm :on-submitted='getGruposAlumnos' :grupos-alumnos='gruposAlumnos' />
+  <GruposAlumnosList :gruposAlumnos='gruposAlumnos' :getGruposAlumnos='getGruposAlumnos' />
 </template>
