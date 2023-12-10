@@ -1,6 +1,7 @@
 <script setup>
 
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
+import MaestrosEditDialog from '@/components/maestros/MaestrosEditDialog.vue'
 
 const props = defineProps({
   maestros: {
@@ -39,12 +40,26 @@ const headers = [
     value: 'action'
   }
 ]
+
+const selectedMaestro = ref()
+const isEditOpen = ref(false)
+
+function editMaestro(maestro) {
+  selectedMaestro.value = { ...maestro }
+  console.log(maestro)
+  isEditOpen.value = true
+}
 </script>
 
 <template>
   <v-data-table :headers='headers' :items='maestros'>
-    <template v-slot:[`item.action`]>
-      <v-icon icon='mdi-pencil' />
+    <template #top>
+      <v-dialog v-model='isEditOpen'>
+        <MaestrosEditDialog :on-submit='loadMaestros' :maestro='selectedMaestro' />
+      </v-dialog>
+    </template>
+    <template v-slot:[`item.action`]='{ item }'>
+      <v-icon icon='mdi-pencil' @click='editMaestro(item)' />
       <v-icon icon='mdi-delete' />
     </template>
   </v-data-table>

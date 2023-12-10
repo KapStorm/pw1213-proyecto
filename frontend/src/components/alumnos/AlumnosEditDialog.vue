@@ -40,7 +40,7 @@ async function handleSubmit() {
 <template>
   <v-card class='w-5xl mx-auto'>
     <v-card-title>
-      <span class='text-4xl text-center'>Editar alumno {{ alumno.nombre }}</span>
+      <span class='text-4xl text-center'>Editar alumno</span>
     </v-card-title>
     <v-card-text>
       <v-container>
