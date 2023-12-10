@@ -11,6 +11,7 @@ import { RouterLink, RouterView } from 'vue-router'
         <RouterLink class='hover:bg-black hover:text-white' to='/alumnos'>Alumnos</RouterLink>
         <RouterLink class='hover:bg-black hover:text-white' to='/maestros'>Maestros</RouterLink>
         <RouterLink class='hover:bg-black hover:text-white' to='/materias'>Materias</RouterLink>
+        <RouterLink class='hover:bg-black hover:text-white' to='/grupos'>Grupos</RouterLink>
       </nav>
     </header>
 
