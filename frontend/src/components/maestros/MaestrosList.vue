@@ -2,6 +2,7 @@
 
 import { onMounted, ref } from 'vue'
 import MaestrosEditDialog from '@/components/maestros/MaestrosEditDialog.vue'
+import MaestrosDeleteDialog from '@/components/maestros/MaestrosDeleteDialog.vue'
 
 const props = defineProps({
   maestros: {
@@ -43,11 +44,16 @@ const headers = [
 
 const selectedMaestro = ref()
 const isEditOpen = ref(false)
+const isDeleteOpen = ref(false)
 
 function editMaestro(maestro) {
   selectedMaestro.value = { ...maestro }
-  console.log(maestro)
   isEditOpen.value = true
+}
+
+function deleteMaestro(maestro) {
+  selectedMaestro.value = { ...maestro }
+  isDeleteOpen.value = true
 }
 </script>
 
@@ -57,10 +63,13 @@ function editMaestro(maestro) {
       <v-dialog v-model='isEditOpen'>
         <MaestrosEditDialog :on-submit='loadMaestros' :maestro='selectedMaestro' />
       </v-dialog>
+      <v-dialog v-model='isDeleteOpen'>
+        <MaestrosDeleteDialog :on-submit='loadMaestros' :maestro='selectedMaestro' @close='() => isDeleteOpen = false' />
+      </v-dialog>
     </template>
     <template v-slot:[`item.action`]='{ item }'>
       <v-icon icon='mdi-pencil' @click='editMaestro(item)' />
-      <v-icon icon='mdi-delete' />
+      <v-icon icon='mdi-delete' @click='deleteMaestro(item)' />
     </template>
   </v-data-table>
 </template>
