@@ -2,6 +2,7 @@
 
 import { onMounted, ref } from 'vue'
 import GruposEditDialog from '@/components/grupos/GruposEditDialog.vue'
+import GruposDeleteDialog from '@/components/grupos/GruposDeleteDialog.vue'
 
 const props = defineProps({
   grupos: {
@@ -94,14 +95,16 @@ async function handleClose() {
           :grupo='selectedGrupo'
           :onSubmit='handleClose' />
       </v-dialog>
+      <v-dialog v-model='isDeleteOpen' max-width='500px'>
+        <GruposDeleteDialog
+          :grupo='selectedGrupo'
+          :getGrupos='props.getGrupos'
+          @close='handleClose' />
+      </v-dialog>
     </template>
     <template #[`item.action`]='{item}'>
       <v-icon icon='mdi-pencil' @click='handleEdit(item)' />
-      <v-icon icon='mdi-delete' />
+      <v-icon icon='mdi-delete' @click='handleDelete(item)' />
     </template>
   </v-data-table>
 </template>
-
-<style scoped>
-
-</style>
