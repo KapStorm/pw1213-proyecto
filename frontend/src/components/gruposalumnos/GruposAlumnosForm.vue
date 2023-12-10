@@ -42,11 +42,7 @@ async function getAlumnos() {
     error.value = response.data.error
   }
 
-  alumnos.value = response.data.filter((alumno) => {
-    return !props.gruposAlumnos.some((grupoAlumno) => {
-      return grupoAlumno.ncontrol === alumno.ncontrol
-    })
-  })
+  alumnos.value = response.data
 }
 
 async function handleSubmit() {

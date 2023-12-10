@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 import axios from 'axios'
+import GruposAlumnosDeleteDialog from '@/components/gruposalumnos/GruposAlumnosDeleteDialog.vue'
 
 const props = defineProps({
   gruposAlumnos: {
@@ -24,7 +25,7 @@ const headers = [
   },
   {
     title: 'Acciones',
-    value: 'action',
+    value: 'action'
   }
 ]
 
@@ -39,6 +40,8 @@ const grupos = ref()
 const filteredAlumnos = ref()
 const error = ref()
 const selectedGrupo = ref()
+const selectedAlumno = ref()
+const isDeleteOpen = ref(false)
 
 function gruposProps(gruposAlumnos) {
   return {
@@ -84,6 +87,11 @@ async function getGrupos() {
 
   grupos.value = response.data
 }
+
+function handleDelete(alumno) {
+  selectedAlumno.value = alumno
+  isDeleteOpen.value = true
+}
 </script>
 
 <template>
@@ -96,8 +104,17 @@ async function getGrupos() {
     label='Grupos'
   />
   <v-data-table :headers='headers' :items='filteredAlumnos'>
-    <template #[`item.action`]>
-      <v-icon icon='mdi-delete' />
+    <template #top>
+      <v-dialog v-model='isDeleteOpen' max-width='500px'>
+        <GruposAlumnosDeleteDialog
+          :grupo='selectedGrupo'
+          :alumno='selectedAlumno'
+          @close='isDeleteOpen = false'
+        />
+      </v-dialog>
+    </template>
+    <template #[`item.action`]='{item}'>
+      <v-icon icon='mdi-delete' @click='handleDelete(item)' />
     </template>
   </v-data-table>
 </template>

@@ -113,27 +113,27 @@ async function handleSubmit() {
       v-model='horariolunes'
       :items='horas'
       label='Horario lunes'
-      required />
+    />
     <v-select
       v-model='horariomartes'
       :items='horas'
       label='Horario martes'
-      required />
+    />
     <v-select
       v-model='horariomiercoles'
       :items='horas'
       label='Horario miercoles'
-      required />
+    />
     <v-select
       v-model='horariojueves'
       :items='horas'
       label='Horario jueves'
-      required />
+    />
     <v-select
       v-model='horarioviernes'
       :items='horas'
       label='Horario viernes'
-      required />
+    />
     <v-btn
       @click='onSubmit'
       color='primary'
