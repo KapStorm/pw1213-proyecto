@@ -2,6 +2,7 @@
 import axios from 'axios'
 import { ref } from 'vue'
 import MaestrosList from '@/components/maestros/MaestrosList.vue'
+import MaestrosForm from '@/components/maestros/MaestrosForm.vue'
 
 const maestros = ref([])
 
@@ -15,6 +16,7 @@ async function loadMaestros() {
 </script>
 
 <template>
+  <MaestrosForm :on-submit='loadMaestros' />
   <MaestrosList :load-maestros='loadMaestros' :maestros='maestros' />
 </template>
 
