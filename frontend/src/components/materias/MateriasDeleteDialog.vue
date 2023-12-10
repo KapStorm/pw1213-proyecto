@@ -3,7 +3,7 @@ import axios from 'axios'
 import { ref } from 'vue'
 
 const props = defineProps({
-  maestro: {
+  materia: {
     type: Object,
     required: true
   },
@@ -15,18 +15,14 @@ const props = defineProps({
 
 const error = ref('')
 
-const emit = defineEmits(['close'])
-
-async function handleSubmitDelete(maestro) {
-  await axios.delete(`http://localhost:3000/api/maestros/${maestro.clavemaestro}`)
+async function handleSubmitDelete(materia) {
+  await axios.delete(`http://localhost:3000/api/materias/${materia.clavemateria}`)
     .then(res => {
       if (res.data.error) {
         error.value = res.data.error
-        return
       }
 
       props.onSubmit()
-      emit('close')
     })
 }
 </script>
@@ -34,19 +30,16 @@ async function handleSubmitDelete(maestro) {
 <template>
   <v-card class='w-5xl mx-auto'>
     <v-card-title>
-      <span class='text-4xl text-center'>Eliminar maestro {{ maestro.nombre }}</span>
+      <span class='text-4xl text-center'>Eliminar materia {{ materia.nombre }}</span>
     </v-card-title>
     <v-card-text>
-      <p>¿Estás seguro de eliminar este maestro?</p>
+      <p>¿Estás seguro de eliminar esta materia?</p>
     </v-card-text>
     <v-card-actions>
       <div class='mx-auto'>
-        <v-btn color='primary' @click='handleSubmitDelete(maestro)'>Eliminar</v-btn>
+        {{ error }}
+        <v-btn color='primary' @click='handleSubmitDelete(materia)'>Eliminar</v-btn>
       </div>
     </v-card-actions>
   </v-card>
 </template>
-
-<style scoped>
-
-</style>
