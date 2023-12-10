@@ -1,6 +1,8 @@
 <script setup>
 
-defineProps({
+import { onMounted } from 'vue'
+
+const props = defineProps({
   grupos: {
     type: Array,
     required: true
@@ -57,6 +59,10 @@ const headers = [
     value: 'action'
   }
 ]
+
+onMounted(async () => {
+  await props.getGrupos()
+})
 </script>
 
 <template>
