@@ -11,7 +11,7 @@ route.get('/', (req, res) => {
 })
 
 route.get('/:id', (req, res) => {
-    db.query('SELECT * FROM alumnosgrupos WHERE id = ?', [req.params.id], (err, rows) => {
+    db.query('SELECT * FROM alumnosgrupos WHERE clavegrupo = ?', [req.params.id], (err, rows) => {
         if(err) throw err;
 
         if(rows.length > 0) {
@@ -25,13 +25,13 @@ route.get('/:id', (req, res) => {
 route.post('/', (req, res) => {
     const {ncontrol, clavegrupo} = req.body;
 
-    db.query('INSERT INTO alumnosgrupos (ncontrol, clavegrupo) VALUES (?, ?)', {ncontrol, clavegrupo}, (err, rows) => {
+    db.query('INSERT INTO alumnosgrupos (ncontrol, clavegrupo) VALUES (?, ?)', [ncontrol, clavegrupo], (err, rows) => {
         if(err) throw err;
         res.json(rows);
     })
 })
 
-route.delete('/:id', (req, res) => {
+route.delete('/', (req, res) => {
     const {ncontrol, clavegrupo} = req.body;
 
     db.query('DELETE FROM alumnosgrupos WHERE ncontrol = ? AND clavegrupo = ?', [ncontrol, clavegrupo], (err, rows) => {

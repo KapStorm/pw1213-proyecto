@@ -56,4 +56,15 @@ route.delete('/:id', (req, res) => {
     })
 })
 
+route.put('/:id', (req, res) => {
+    const {id} = req.params;
+    const {clavemateria, clavemaestro, limitealumnos, horariolunes, horariomartes, horariomiercoles, horariojueves, horarioviernes} = req.body;
+
+    db.query('UPDATE grupos SET clavemateria = ?, clavemaestro = ?, limitealumnos = ?, horariolunes = ?, horariomartes = ?, horariomiercoles = ?, horariojueves = ?, horarioviernes = ? WHERE clavegrupo = ?', [clavemateria, clavemaestro, limitealumnos, horariolunes, horariomartes, horariomiercoles, horariojueves, horarioviernes, id], (err, rows) => {
+        if (err) throw err;
+
+        res.json({msg: 'Grupo actualizado correctamente'});
+    })
+})
+
 export default route

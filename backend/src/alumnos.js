@@ -53,10 +53,14 @@ route.put('/:id', (req, res) => {
 route.delete('/:id', (req, res) => {
     const {id} = req.params;
 
-    db.query('DELETE FROM alumnos WHERE ncontrol = ?', [id], (err, rows) => {
+    db.query('DELETE FROM alumnosgrupos WHERE ncontrol = ?', [id], (err, rows) => {
         if (err) throw err;
 
-        res.json({msg: 'Alumno eliminado correctamente'});
+        db.query('DELETE FROM alumnos WHERE ncontrol = ?', [id], (err, rows) => {
+            if (err) throw err;
+
+            res.json({msg: 'Alumno eliminado correctamente'});
+        })
     })
 })
 

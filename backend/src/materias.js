@@ -49,10 +49,18 @@ route.put('/:id', (req, res) => {
 route.delete('/:id', (req, res) => {
     const {id} = req.params;
 
-    db.query('DELETE FROM materias WHERE clavemateria = ?', [id], (err, rows) => {
+    db.query('DELETE FROM alumnosgrupos WHERE clavegrupo = ?', [id], (err, rows) => {
         if (err) throw err;
 
-        res.json({msg: 'Materia eliminada correctamente'});
+        db.query('DELETE FROM grupos WHERE clavegrupo = ?', [id], (err, rows) => {
+            if (err) throw err;
+
+            db.query('DELETE FROM materias WHERE clavemateria = ?', [id], (err, rows) => {
+                if (err) throw err;
+
+                res.json({msg: 'Materia eliminada correctamente'});
+            })
+        })
     })
 })
 
