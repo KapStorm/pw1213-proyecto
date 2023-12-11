@@ -5,7 +5,7 @@ const route = Router()
 
 route.get('/', (req, res) => {
     db.query('SELECT * FROM alumnos', (err, rows) => {
-        if (err) throw err;
+        if (err) return res.json({error: 'Error al obtener alumnos'});
 
         res.json(rows);
     })
@@ -15,7 +15,7 @@ route.get('/:id', (req, res) => {
     const {id} = req.params;
 
     db.query('SELECT * FROM alumnos WHERE ncontrol = ? LIMIT 1', [id], (err, rows) => {
-        if (err) throw err;
+        if (err) return res.json({error: 'Error al obtener alumno'});
 
         if (rows.length > 0) {
             return res.json(rows[0]);
@@ -44,7 +44,7 @@ route.put('/:id', (req, res) => {
     const {id} = req.params;
 
     db.query('UPDATE alumnos SET nombre = ?, carrera = ?, estatus = ? WHERE ncontrol = ?', [nombre, carrera, estatus, id], (err, rows) => {
-        if (err) throw err;
+        if (err) return res.json({error: 'Error al actualizar alumno'});
 
         res.json({msg: 'Alumno actualizado correctamente'});
     })
@@ -54,10 +54,10 @@ route.delete('/:id', (req, res) => {
     const {id} = req.params;
 
     db.query('DELETE FROM alumnosgrupos WHERE ncontrol = ?', [id], (err, rows) => {
-        if (err) throw err;
+        if (err) return res.json({error: 'Error al eliminar alumno'});
 
         db.query('DELETE FROM alumnos WHERE ncontrol = ?', [id], (err, rows) => {
-            if (err) throw err;
+            if (err) return res.json({error: 'Error al eliminar alumno'});
 
             res.json({msg: 'Alumno eliminado correctamente'});
         })

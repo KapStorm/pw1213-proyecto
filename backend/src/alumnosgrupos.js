@@ -5,14 +5,14 @@ const route = Router()
 
 route.get('/', (req, res) => {
     db.query('SELECT * FROM alumnosgrupos', (err, rows) => {
-        if(err) throw err;
+        if(err) return res.json({error: 'Error al obtener alumnosgrupos'});
         res.json(rows);
     })
 })
 
 route.get('/:id', (req, res) => {
     db.query('SELECT * FROM alumnosgrupos WHERE clavegrupo = ?', [req.params.id], (err, rows) => {
-        if(err) throw err;
+        if(err) return res.json({error: 'Error al obtener alumnosgrupos'});
 
         if(rows.length > 0) {
             return res.json(rows[0]);
@@ -26,7 +26,7 @@ route.post('/', (req, res) => {
     const {ncontrol, clavegrupo} = req.body;
 
     db.query('INSERT INTO alumnosgrupos (ncontrol, clavegrupo) VALUES (?, ?)', [ncontrol, clavegrupo], (err, rows) => {
-        if(err) throw err;
+        if(err) return res.json({error: 'Error al insertar alumno en grupo'});
         res.json(rows);
     })
 })
@@ -35,7 +35,7 @@ route.delete('/', (req, res) => {
     const {ncontrol, clavegrupo} = req.body;
 
     db.query('DELETE FROM alumnosgrupos WHERE ncontrol = ? AND clavegrupo = ?', [ncontrol, clavegrupo], (err, rows) => {
-        if(err) throw err;
+        if(err) return res.json({error: 'Error al eliminar alumno del grupo'});
         res.json({msg: 'Alumno eliminado correctamente del grupo'});
     })
 })
