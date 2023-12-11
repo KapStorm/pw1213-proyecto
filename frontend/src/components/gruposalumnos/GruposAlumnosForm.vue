@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import axios from 'axios'
 
 const props = defineProps({
@@ -18,6 +18,7 @@ const alumnos = ref([])
 const selectedGrupo = ref()
 const selectedAlumno = ref()
 const error = ref()
+const grupoLleno = ref(false)
 
 onMounted(async () => {
   await getGrupos()
@@ -44,6 +45,20 @@ async function getAlumnos() {
 
   alumnos.value = response.data
 }
+
+watch(selectedGrupo, (newValue) => {
+  if (!newValue) {
+    return
+  }
+
+  const grupo = grupos.value.find((grupo) => {
+    return grupo.clavegrupo === newValue
+  })
+
+  if (grupo) {
+    grupoLleno.value = grupo.inscritos >= grupo.limitealumnos
+  }
+})
 
 async function handleSubmit() {
   const response = await axios.post('http://localhost:3000/api/alumnos-grupos', {
@@ -78,8 +93,11 @@ async function handleSubmit() {
       item-value='ncontrol'
       label='Alumno'
       required />
-    <v-btn color='primary' type='submit'>
+    <v-btn color='primary' type='submit' :disabled='grupoLleno'>
       Asignar
     </v-btn>
   </form>
+  <p class='text-red-500' v-if='grupoLleno'>
+    El grupo esta lleno, ya no se puede inscribir mas alumnos
+  </p>
 </template>
