@@ -53,13 +53,18 @@ route.put('/:id', (req, res) => {
 route.delete('/:id', (req, res) => {
     const {id} = req.params;
 
-    db.query('DELETE FROM alumnosgrupos WHERE ncontrol = ?', [id], (err, rows) => {
+    // bajar en 1 el contador de alumnos en el grupo
+    db.query('UPDATE grupos SET inscritos = grupos.inscritos - 1 WHERE clavegrupo = (SELECT alumnosgrupos.clavegrupo FROM alumnosgrupos WHERE ncontrol = ?)', [id], (err, rows) => {
         if (err) return res.json({error: 'Error al eliminar alumno'});
 
-        db.query('DELETE FROM alumnos WHERE ncontrol = ?', [id], (err, rows) => {
+        db.query('DELETE FROM alumnosgrupos WHERE ncontrol = ?', [id], (err, rows) => {
             if (err) return res.json({error: 'Error al eliminar alumno'});
 
-            res.json({msg: 'Alumno eliminado correctamente'});
+            db.query('DELETE FROM alumnos WHERE ncontrol = ?', [id], (err, rows) => {
+                if (err) return res.json({error: 'Error al eliminar alumno'});
+
+                res.json({msg: 'Alumno eliminado correctamente'});
+            })
         })
     })
 })

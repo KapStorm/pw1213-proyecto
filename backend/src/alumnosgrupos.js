@@ -25,18 +25,26 @@ route.get('/:id', (req, res) => {
 route.post('/', (req, res) => {
     const {ncontrol, clavegrupo} = req.body;
 
-    db.query('INSERT INTO alumnosgrupos (ncontrol, clavegrupo) VALUES (?, ?)', [ncontrol, clavegrupo], (err, rows) => {
+    db.query('UPDATE grupos SET inscritos = inscritos + 1 WHERE clavegrupo = ?', [clavegrupo], (err, rows) => {
         if(err) return res.json({error: 'Error al insertar alumno en grupo'});
-        res.json(rows);
+
+        db.query('INSERT INTO alumnosgrupos (ncontrol, clavegrupo) VALUES (?, ?)', [ncontrol, clavegrupo], (err, rows) => {
+            if(err) return res.json({error: 'Error al insertar alumno en grupo'});
+            res.json(rows);
+        })
     })
 })
 
 route.delete('/', (req, res) => {
     const {ncontrol, clavegrupo} = req.body;
 
-    db.query('DELETE FROM alumnosgrupos WHERE ncontrol = ? AND clavegrupo = ?', [ncontrol, clavegrupo], (err, rows) => {
+    db.query('UPDATE grupos SET inscritos = inscritos - 1 WHERE clavegrupo = ?', [clavegrupo], (err, rows) => {
         if(err) return res.json({error: 'Error al eliminar alumno del grupo'});
-        res.json({msg: 'Alumno eliminado correctamente del grupo'});
+
+        db.query('DELETE FROM alumnosgrupos WHERE ncontrol = ? AND clavegrupo = ?', [ncontrol, clavegrupo], (err, rows) => {
+            if(err) return res.json({error: 'Error al eliminar alumno del grupo'});
+            res.json({msg: 'Alumno eliminado correctamente del grupo'});
+        })
     })
 })
 
