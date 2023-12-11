@@ -7,7 +7,7 @@
     <h3 class='font-bold text-3xl mt-6'>Hecho por: </h3>
     <ul class='list-disc'>
       <li class='text-2xl'>Sebastian Arellanes Beltran</li>
-      <li class='text-2xl'>Andres Mendoza Zamudio</li>
+      <li class='text-2xl'>Andres Eduardo Mendoza Zamudio</li>
     </ul>
   </main>
 </template>
