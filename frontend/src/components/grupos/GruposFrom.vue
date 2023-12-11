@@ -86,6 +86,7 @@ async function handleSubmit() {
 </script>
 
 <template>
+  <h2 class='text-3xl text-center'>Formulario crear grupos</h2>
   <form @submit.prevent='handleSubmit'>
     <v-text-field
       v-model='clavegrupo'
